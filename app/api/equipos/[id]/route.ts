@@ -1,17 +1,10 @@
 import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
-import { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
+// NO declares tu propio tipo RouteContext
 
-// ✅ Tipar correctamente el context (para rutas dinámicas)
-interface RouteContext {
-  params: {
-    id: string
-  }
-}
-
-export async function PUT(req: NextRequest, context: RouteContext) {
-  const id = parseInt(context.params.id)
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const id = parseInt(params.id)
   const data = await req.json()
 
   try {
@@ -33,16 +26,10 @@ export async function PUT(req: NextRequest, context: RouteContext) {
   }
 }
 
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const id = parseInt(params.id)
 
-// ✅ DELETE — Eliminar equipo por ID
-export async function DELETE(
-  req: Request,
-  context: { params: { id: string } }
-) {
   try {
-    const id = parseInt(context.params.id)
-
-    // Verifica si tiene préstamos activos o mantenimientos
     const [activeLoans, maintenanceRecords] = await Promise.all([
       prisma.prestamo.findFirst({
         where: {
@@ -71,7 +58,6 @@ export async function DELETE(
       )
     }
 
-    // Elimina registros relacionados en una transacción
     await prisma.$transaction(async (tx) => {
       await tx.mantenimiento.deleteMany({ where: { id_equipo: id } })
       await tx.prestamo.deleteMany({ where: { id_equipo: id } })
