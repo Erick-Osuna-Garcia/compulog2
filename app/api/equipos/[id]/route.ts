@@ -4,10 +4,12 @@ import { NextRequest } from 'next/server'
 
 export async function PUT(
   req: NextRequest,
+       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  
   { params }: { params: { id: string } }
 )  {
   try {
-    const id = parseInt(context.params.id)
+    const id = parseInt(params.id)
     const data = await req.json()
 
     const equipo = await prisma.equipo.update({
