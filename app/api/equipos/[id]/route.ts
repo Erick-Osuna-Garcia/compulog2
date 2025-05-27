@@ -2,14 +2,19 @@ import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 import { NextRequest } from 'next/server'
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const id = parseInt(params.id) // ✅ Usamos directamente params
-    const data = await req.json()
 
+// ✅ Tipar correctamente el context (para rutas dinámicas)
+interface RouteContext {
+  params: {
+    id: string
+  }
+}
+
+export async function PUT(req: NextRequest, context: RouteContext) {
+  const id = parseInt(context.params.id)
+  const data = await req.json()
+
+  try {
     const equipo = await prisma.equipo.update({
       where: { id_equipo: id },
       data: {
@@ -17,17 +22,14 @@ export async function PUT(
         tipo_equipo: data.tipo_equipo,
         marca: data.marca,
         modelo: data.modelo,
-        estado: data.estado,
+        estado: data.estado
       }
     })
 
     return NextResponse.json(equipo)
   } catch (error) {
     console.error('Error al actualizar equipo:', error)
-    return NextResponse.json(
-      { error: 'Error al actualizar equipo' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Error al actualizar equipo' }, { status: 500 })
   }
 }
 
