@@ -4,12 +4,10 @@ import { NextRequest } from 'next/server'
 
 export async function PUT(
   req: NextRequest,
-       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  
   { params }: { params: { id: string } }
-)  {
+) {
   try {
-    const id = parseInt(params.id)
+    const id = parseInt(params.id) // ✅ Usamos directamente params
     const data = await req.json()
 
     const equipo = await prisma.equipo.update({
@@ -20,7 +18,6 @@ export async function PUT(
         marca: data.marca,
         modelo: data.modelo,
         estado: data.estado,
-        // Agrega otros campos si es necesario
       }
     })
 
@@ -33,6 +30,7 @@ export async function PUT(
     )
   }
 }
+
 
 // ✅ DELETE — Eliminar equipo por ID
 export async function DELETE(
