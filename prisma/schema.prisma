@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Equipo {
+  id_equipo         Int             @id @default(autoincrement())
+  nombre_equipo     String
+  tipo_equipo       String
+  marca             String
+  modelo            String
+  numero_serie      String
+  sistema_operativo String
+  procesador        String
+  ram               String
+  disco_duro        String
+  fecha_compra      DateTime
+  estado            String
+  id_ubicacion      Int
+  id_usuario        Int
+  ubicacion         Ubicacion       @relation(fields: [id_ubicacion], references: [id_ubicacion])
+  usuario           Usuario         @relation(fields: [id_usuario], references: [id_usuario])
+  mantenimientos    Mantenimiento[]
+  prestamos         Prestamo[]
+}
+
+model Mantenimiento {
+  id_mantenimiento  Int      @id @default(autoincrement())
+  tipo             String
+  descripcion      String
+  fecha            DateTime
+  tecnico          String
+  estado           String
+  id_equipo        Int
+  equipo           Equipo    @relation(fields: [id_equipo], references: [id_equipo])
+}
+
+model Prestamo {
+  id_prestamo      Int      @id @default(autoincrement())
+  fecha_prestamo   DateTime
+  fecha_devolucion DateTime?
+  estado           String
+  notas            String?
+  id_equipo        Int
+  id_usuario       Int
+  equipo           Equipo   @relation(fields: [id_equipo], references: [id_equipo])
+  usuario          Usuario  @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model Ubicacion {
+  id_ubicacion Int      @id @default(autoincrement())
+  edificio     String
+  piso         String
+  oficina      String
+  Equipo       Equipo[]
+}
+
+model Usuario {
+  id_usuario    Int      @id @default(autoincrement())
+  nombre        String
+  correo        String   @unique
+  rol           String
+  equipos       Equipo[]
+  prestamos     Prestamo[]
+}
