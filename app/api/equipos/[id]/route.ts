@@ -1,9 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 
+// ✅ PUT — Actualizar equipo por ID
 export async function PUT(
   req: Request,
-context: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     const id = parseInt(context.params.id)
@@ -17,25 +18,29 @@ context: { params: { id: string } }
         marca: data.marca,
         modelo: data.modelo,
         estado: data.estado,
-        // ...other fields...
+        // Agrega otros campos si es necesario
       }
     })
 
     return NextResponse.json(equipo)
   } catch (error) {
     console.error('Error al actualizar equipo:', error)
-    return NextResponse.json({ error: 'Error al actualizar equipo' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Error al actualizar equipo' },
+      { status: 500 }
+    )
   }
 }
 
+// ✅ DELETE — Eliminar equipo por ID
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(await Promise.resolve(params.id))
+    const id = parseInt(context.params.id)
 
-    // Check if equipment has any active loans or maintenance records
+    // Verifica si tiene préstamos activos o mantenimientos
     const [activeLoans, maintenanceRecords] = await Promise.all([
       prisma.prestamo.findFirst({
         where: {
@@ -51,44 +56,37 @@ export async function DELETE(
     ])
 
     if (activeLoans) {
-      return NextResponse.json({ 
-        error: 'No se puede eliminar un equipo con préstamos activos' 
-      }, { status: 400 })
+      return NextResponse.json(
+        { error: 'No se puede eliminar un equipo con préstamos activos' },
+        { status: 400 }
+      )
     }
 
     if (maintenanceRecords) {
-      return NextResponse.json({ 
-        error: 'No se puede eliminar un equipo con registros de mantenimiento' 
-      }, { status: 400 })
+      return NextResponse.json(
+        { error: 'No se puede eliminar un equipo con registros de mantenimiento' },
+        { status: 400 }
+      )
     }
 
-    // Delete all related records in a transaction
+    // Elimina registros relacionados en una transacción
     await prisma.$transaction(async (tx) => {
-      // Delete related maintenance records first
-      await tx.mantenimiento.deleteMany({
-        where: { id_equipo: id }
-      })
-
-      // Delete related loans
-      await tx.prestamo.deleteMany({
-        where: { id_equipo: id }
-      })
-
-      // Finally delete the equipment
-      await tx.equipo.delete({
-        where: { id_equipo: id }
-      })
+      await tx.mantenimiento.deleteMany({ where: { id_equipo: id } })
+      await tx.prestamo.deleteMany({ where: { id_equipo: id } })
+      await tx.equipo.delete({ where: { id_equipo: id } })
     })
 
-    return NextResponse.json({ 
-      message: 'Equipo y registros relacionados eliminados correctamente' 
+    return NextResponse.json({
+      message: 'Equipo y registros relacionados eliminados correctamente'
     })
-
   } catch (error) {
     console.error('Error al eliminar equipo:', error)
-    return NextResponse.json({ 
-      error: 'Error al eliminar equipo',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Error al eliminar equipo',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    )
   }
 }
