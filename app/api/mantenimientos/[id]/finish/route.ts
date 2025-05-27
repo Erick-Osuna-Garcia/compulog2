@@ -21,6 +21,7 @@ export async function PUT(
       })
     ])
     return NextResponse.json({ message: 'Mantenimiento finalizado y equipo disponible' })
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json({ error: 'Error al finalizar mantenimiento' }, { status: 500 })
   }

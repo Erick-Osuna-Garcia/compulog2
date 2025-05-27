@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     }
 
     // Create loan and update equipment status in a transaction
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [prestamo, _] = await prisma.$transaction([
       // Create the loan
       prisma.prestamo.create({

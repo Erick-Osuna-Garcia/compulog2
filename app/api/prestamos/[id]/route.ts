@@ -50,6 +50,7 @@ export async function DELETE(
     }
 
     // Execute both operations in a transaction
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const result = await prisma.$transaction([
       // Delete the loan
       prisma.prestamo.delete({

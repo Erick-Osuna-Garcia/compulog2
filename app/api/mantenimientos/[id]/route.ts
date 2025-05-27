@@ -11,6 +11,7 @@ export async function DELETE(
       where: { id_mantenimiento: id }
     })
     return NextResponse.json({ message: 'Mantenimiento eliminado' })
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json({ error: 'Error al eliminar mantenimiento' }, { status: 500 })
   }
