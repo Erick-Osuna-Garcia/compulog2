@@ -1,11 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
-// ✅ PUT — Actualizar equipo por ID
 export async function PUT(
-  req: Request,
-  context: { params: { id: string } }
-) {
+  req: NextRequest,
+  { params }: { params: { id: string } }
+)  {
   try {
     const id = parseInt(context.params.id)
     const data = await req.json()
