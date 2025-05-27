@@ -3,28 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 // NO declares tu propio tipo RouteContext
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  const id = parseInt(params.id)
-  const data = await req.json()
 
-  try {
-    const equipo = await prisma.equipo.update({
-      where: { id_equipo: id },
-      data: {
-        nombre_equipo: data.nombre_equipo,
-        tipo_equipo: data.tipo_equipo,
-        marca: data.marca,
-        modelo: data.modelo,
-        estado: data.estado
-      }
-    })
-
-    return NextResponse.json(equipo)
-  } catch (error) {
-    console.error('Error al actualizar equipo:', error)
-    return NextResponse.json({ error: 'Error al actualizar equipo' }, { status: 500 })
-  }
-}
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   const id = parseInt(params.id)
