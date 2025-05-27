@@ -10,6 +10,7 @@ export async function GET() {
       }
     })
     return NextResponse.json(prestamos || []) // Return empty array if null
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al obtener préstamos:', error)
     return NextResponse.json({ error: 'Error al obtener préstamos' }, { status: 500 })
@@ -60,6 +61,7 @@ export async function POST(req: Request) {
     ])
 
     return NextResponse.json(prestamo)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al crear préstamo:', error)
     return NextResponse.json({ 
@@ -91,6 +93,7 @@ export async function PUT(req: Request) {
     ])
 
     return NextResponse.json(prestamo)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al devolver préstamo:', error)
     return NextResponse.json({ 

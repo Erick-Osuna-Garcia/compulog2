@@ -35,30 +35,10 @@ export async function GET() {
   return NextResponse.json(mantenimientos)
 }
 
-const handleStatusChange = async (item, section) => {
-  const idField = section === 'mantenimientos' ? 'id_mantenimiento' : 'id_prestamo';
-  const endpoint = section === 'mantenimientos'
-    ? `/api/mantenimientos/${item[idField]}/finish`
-    : `/api/prestamos/${item[idField]}/return`;
-
-  const res = await fetch(endpoint, { method: 'PUT' });
-  if (!res.ok) alert('Error al finalizar');
-  await fetchData();
-};
-
-const columns = [
-  { key: 'tipo', label: 'Tipo' },
-  { key: 'descripcion', label: 'Descripción' },
-  { key: 'fecha', label: 'Fecha' },
-  { key: 'tecnico', label: 'Técnico' },
-  { key: 'equipo.nombre_equipo', label: 'Equipo' }, // <- Esta columna muestra la PC
-]
 
 
-function formatCellValue(item, key) {
-  // Soporta 'equipo.nombre_equipo'
-  return key.split('.').reduce((obj, k) => (obj ? obj[k] : ''), item) ?? ''
-}
+
+
 
 /* <DataTable
   columns={columns}

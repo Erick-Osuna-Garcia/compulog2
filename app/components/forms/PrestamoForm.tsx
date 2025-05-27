@@ -58,7 +58,7 @@ export default function PrestamoForm({ onSubmit, onCancel, initialData }: Presta
       console.error('Error:', error)
     }
   }
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReturn = async (id_prestamo: number, id_equipo: number) => {
     try {
       const response = await fetch('/api/prestamos', {

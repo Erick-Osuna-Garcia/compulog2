@@ -9,6 +9,7 @@ export async function GET() {
       }
     })
     return NextResponse.json(mantenimientos)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al obtener mantenimientos:', error)
     return NextResponse.json({ error: 'Error al obtener mantenimientos' }, { status: 500 })
@@ -56,6 +57,7 @@ export async function POST(req: Request) {
     })
     
     return NextResponse.json(nuevo)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al crear mantenimiento:', error)
     return NextResponse.json({ 

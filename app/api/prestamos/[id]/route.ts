@@ -26,6 +26,7 @@ export async function PUT(
     })
 
     return NextResponse.json(prestamo)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al actualizar préstamo:', error)
     return NextResponse.json({ error: 'Error al actualizar préstamo' }, { status: 500 })
@@ -62,6 +63,7 @@ export async function DELETE(
     ])
 
     return NextResponse.json({ message: 'Préstamo eliminado correctamente' })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error('Error al eliminar préstamo:', error)
     return NextResponse.json({ error: 'Error al eliminar préstamo' }, { status: 500 })
