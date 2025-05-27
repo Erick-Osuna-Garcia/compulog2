@@ -74,7 +74,7 @@ export default function InventarioPage() {
     }
   }
 
-  const handleSubmit = async (formData: any) => {
+  const handleSubmit = async (formData: unknown) => {
     try {
       const idField = {
         equipos: 'id_equipo',
@@ -108,12 +108,12 @@ export default function InventarioPage() {
     }
   }
 
-  const handleEdit = (item: any) => {
+  const handleEdit = (item: unknown) => {
     setEditingItem(item)
     setIsModalOpen(true)
   }
 
-  const handleDelete = async (item: any) => {
+  const handleDelete = async (item: unknown) => {
     try {
       const idField = {
         equipos: 'id_equipo',
@@ -147,7 +147,7 @@ export default function InventarioPage() {
     }
   }
 
-  const handleStatusChange = async (item: any, section: 'mantenimientos' | 'prestamos') => {
+  const handleStatusChange = async (item: unknown, section: 'mantenimientos' | 'prestamos') => {
     try {
       // 1. Elimina el registro de mantenimiento o préstamo
       const idField = section === 'mantenimientos' ? 'id_mantenimiento' : 'id_prestamo';

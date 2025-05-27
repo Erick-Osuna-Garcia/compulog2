@@ -3,10 +3,10 @@ import { useState } from 'react'
 
 interface DataTableProps {
   columns: { key: string; label: string }[]
-  data: any[]
-  onEdit?: (item: any) => void
-  onDelete?: (item: any) => void
-  onStatusChange?: (item: any) => void
+  data: unknown[]
+  onEdit?: (item: unknown) => void
+  onDelete?: (item: unknown) => void
+  onStatusChange?: (item: unknown) => void
   activeSection?: string
 }
 
@@ -17,14 +17,14 @@ export default function DataTable({ columns, data, onEdit, onDelete, onStatusCha
   })
 
   // Get a unique identifier for each row
-  const getRowKey = (item: any) => {
+  const getRowKey = (item: unknown) => {
     if (item.id_prestamo) return `prestamo-${item.id_prestamo}`
     if (item.id_equipo) return `equipo-${item.id_equipo}`
     if (item.id_mantenimiento) return `mantenimiento-${item.id_mantenimiento}`
     return `item-${Math.random()}`  // Fallback to random key if no id found
   }
 
-  const formatCellValue = (item: any, key: string) => {
+  const formatCellValue = (item: unknown, key: string) => {
     try {
       // Handle nested properties
       if (key.includes('.')) {
@@ -55,7 +55,7 @@ export default function DataTable({ columns, data, onEdit, onDelete, onStatusCha
     }
   }
 
-  const renderActionButtons = (item: any) => {
+  const renderActionButtons = (item: unknown) => {
     const renderStatusButton = () => {
       if (activeSection === 'mantenimientos' && item.estado === 'En Mantenimiento') {
         return (

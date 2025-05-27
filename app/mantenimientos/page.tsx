@@ -15,7 +15,7 @@ export default function MantenimientosPage() {
       <h1 className="text-2xl font-bold mb-6">Registro de Mantenimientos</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {mantenimientos.map((mant: any) => (
+        {mantenimientos.map((mant: unknown) => (
           <div key={mant.id_mantenimiento} className="bg-white rounded-lg shadow-md overflow-hidden">
             <div className="p-4">
               <div className="flex justify-between items-start">

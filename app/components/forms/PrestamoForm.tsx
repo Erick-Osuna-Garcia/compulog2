@@ -12,9 +12,9 @@ interface Usuario {
 }
 
 interface PrestamoFormProps {
-  onSubmit: (data: any) => void
+  onSubmit: (data: unknown) => void
   onCancel: () => void
-  initialData?: any
+  initialData?: unknown
 }
 
 export default function PrestamoForm({ onSubmit, onCancel, initialData }: PrestamoFormProps) {

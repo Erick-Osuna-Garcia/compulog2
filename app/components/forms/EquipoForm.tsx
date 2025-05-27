@@ -2,7 +2,7 @@
 import { useState } from 'react'
 
 interface EquipoFormProps {
-  onSubmit: (data: any) => void
+  onSubmit: (data: unknown) => void
   onCancel: () => void
 }
 

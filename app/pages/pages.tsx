@@ -18,7 +18,7 @@ const equipoSchema = z.object({
 
 export default function EquiposPage() {
   const [equipos, setEquipos] = useState([]);
-  const [formData, setFormData] = useState<any>({});
+  const [formData, setFormData] = useState<unknown>({});
   const [isEditing, setIsEditing] = useState(false);
 
   const fetchEquipos = async () => {
@@ -31,7 +31,7 @@ export default function EquiposPage() {
     fetchEquipos();
   }, []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: unknown) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -48,12 +48,12 @@ export default function EquiposPage() {
         setIsEditing(false);
         fetchEquipos();
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       alert('Error en validación o envío: ' + err.message);
     }
   };
 
-  const handleEdit = (equipo: any) => {
+  const handleEdit = (equipo: unknown) => {
     setFormData(equipo);
     setIsEditing(true);
   };
@@ -88,7 +88,7 @@ export default function EquiposPage() {
       </form>
 
       <ul>
-        {equipos.map((e: any) => (
+        {equipos.map((e: unknown) => (
           <li key={e.id} className="border p-2 mb-2 rounded">
             <div className="flex justify-between items-center">
               <span>{e.nombre} - {e.marca} - {e.modelo}</span>
