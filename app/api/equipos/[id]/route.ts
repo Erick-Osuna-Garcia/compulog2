@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server'
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+context: { params: { id: string } }
 ) {
   try {
-    const id = parseInt(params.id)
+    const id = parseInt(context.params.id)
     const data = await req.json()
 
     const equipo = await prisma.equipo.update({
